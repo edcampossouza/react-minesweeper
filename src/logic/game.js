@@ -124,12 +124,14 @@ function generateGame(height, width, bombs) {
       table[i][j] = cntBombs;
     }
   }
-  return { table, state, tryCell, flagCell };
+  return { table, state, tryCell, flagCell, height, width };
 }
 
-const game = generateGame(10, 10, 50);
-printTable(game.table);
-printTable(game.state);
-game.tryCell(0, 0);
-printTable(game.table);
-printTable(game.state);
+// const game = generateGame(10, 10, 50);
+// printTable(game.table);
+// printTable(game.state);
+// game.tryCell(0, 0);
+// printTable(game.table);
+// printTable(game.state);
+
+export default generateGame;
