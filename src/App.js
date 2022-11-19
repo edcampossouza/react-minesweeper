@@ -21,9 +21,9 @@ function Welcome({ setGame, options }) {
 
 function App() {
   const options = [
-    { size: 5, bombs: 5 },
-    { size: 10, bombs: 12 },
-    { size: 20, bombs: 50 },
+    { size: 8, bombs: 10 },
+    { size: 16, bombs: 40 },
+    { size: 20, bombs: 100 },
   ];
 
   const [styleApp, setStyleApp] = useState("");
