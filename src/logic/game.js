@@ -46,12 +46,11 @@ function generateGame(height, width, bombs) {
         lost();
       } else {
         const arrToReveal = [{ x, y }];
-        let first = true;
         while (arrToReveal.length > 0) {
           const toReveal = arrToReveal[0];
           state[toReveal.x][toReveal.y] = "r";
           arrToReveal.splice(0, 1);
-          if (!first && table[toReveal.x][toReveal.y] !== 0) continue;
+          if (table[toReveal.x][toReveal.y] !== 0) continue;
           if (
             safeCell(toReveal.x - 1, toReveal.y - 1) &&
             state[toReveal.x - 1][toReveal.y - 1] !== "r"
@@ -124,7 +123,6 @@ function generateGame(height, width, bombs) {
               arrToReveal
             );
           }
-          first = false;
         }
       }
     }
