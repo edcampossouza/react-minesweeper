@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Bomb from "../assets/bomb.png";
 import "./Game.css";
 
 const MineSweeper = ({ game }) => {
@@ -90,7 +91,13 @@ const MineRow = ({ row, rowIndex, clickHandler }) => {
 const MineCell = ({ cell, state, x, y, clickHandler }) => {
   return (
     <td onClick={() => clickHandler(x, y)} className="game-cell">
-      {state === "h" ? "" : cell}
+      {state === "h" ? (
+        ""
+      ) : cell === "b" ? (
+        <img className="cell-icon" src={Bomb} />
+      ) : (
+        cell
+      )}
     </td>
   );
 };

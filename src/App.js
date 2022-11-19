@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import MineSweeper from "./game/MineSweeper";
+import generateGame from "./logic/game";
+import { useState } from "react";
+
+function Welcome({ setGame, options }) {
+  return (
+    <>
+      <h1>Select the board size:</h1>
+      <ul>
+        {options.map((op) => (
+          <li className="list-option" key={op.size} onClick={() => setGame(op.size, op.bombs)}>
+            {op.size} x {op.size} ({op.bombs} bombs)
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
 
 function App() {
+  const options = [
+    { size: 5, bombs: 5 },
+    { size: 10, bombs: 12 },
+    { size: 20, bombs: 50 },
+  ];
+
+  const [styleApp, setStyleApp] = useState("");
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
+  const [game, setGame] = useState(null);
+  const [playing, setPlaying] = useState(false);
+  function setGameOptions(size, bombs) {
+    setStyleApp("hidden");
+    setGame(generateGame(size, size, bombs));
+    setPlaying(true);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {playing ? (
+        <MineSweeper game={game} />
+      ) : (
+        <Welcome options={options} setGame={setGameOptions} />
+      )}
     </div>
   );
 }

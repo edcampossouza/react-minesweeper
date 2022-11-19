@@ -1,5 +1,13 @@
 .game-cell {
-  background-color: green;
+  background-color: #a0a0a0;
+  width: 25px;
+  height: 25px;
+  cursor: default;
+  text-align: center;
+}
+
+.cell-icon {
   width: 25px;
   height: 25px;
 }
+
