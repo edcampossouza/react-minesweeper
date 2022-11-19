@@ -162,7 +162,7 @@ function generateGame(height, width, bombs) {
       table[i][j] = cntBombs;
     }
   }
-  return { table, state, height, width, stats, tryCell, flagCell };
+  return { table, state, height, width, bombs, stats, tryCell, flagCell };
 }
 
 // const game = generateGame(10, 10, 50);

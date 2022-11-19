@@ -58,7 +58,7 @@ const MineSweeper = ({ game }) => {
           </tr>
           <tr>
             <td>Bombs Revealed</td>
-            <td>{gameStats.bombsRevealed}</td>
+            <td>{gameStats.bombsRevealed}/{game.bombs}</td>
           </tr>
         </tbody>
       </table>
