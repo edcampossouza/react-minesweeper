@@ -3,9 +3,7 @@ import Bomb from "../assets/bomb.png";
 import "./Game.css";
 
 const MineSweeper = ({ game }) => {
-  const [gameTable, setGameTable] = useState(game.table);
   const [gameState, setGameState] = useState(game.state);
-  const [gameStats, setGameStats] = useState(game.stats);
   const cellClickHandler = (x, y) => {
     console.log(x, y);
     game.tryCell(x, y);
@@ -13,29 +11,15 @@ const MineSweeper = ({ game }) => {
     console.log(game.stats);
     setGameState(state);
   };
-  // return (
-  //   <table className="game-table">
-  //     <tbody>
-  //       {gameState.map((row, rowIndex) => (
-  //         <MineRow
-  //           key={rowIndex}
-  //           row={row}
-  //           rowIndex={rowIndex}
-  //           clickHandler={cellClickHandler}
-  //         />
-  //       ))}
-  //     </tbody>
-  //   </table>
-  // );
   const gameTableRows = () => {
     const rows = [];
-    for (let i = 0; i < gameTable.length; i++) {
+    for (let i = 0; i < game.table.length; i++) {
       const data = [];
-      for (let j = 0; j < gameTable[i].length; j++) {
+      for (let j = 0; j < game.table[i].length; j++) {
         data.push(
           <MineCell
             key={i * gameState.length + j}
-            cell={gameTable[i][j]}
+            cell={game.table[i][j]}
             state={gameState[i][j]}
             x={i}
             y={j}
@@ -54,37 +38,23 @@ const MineSweeper = ({ game }) => {
         <tbody>
           <tr>
             <td>Plays</td>
-            <td>{gameStats.plays}</td>
+            <td>{game.stats.plays}</td>
           </tr>
           <tr>
             <td>Bombs Revealed</td>
-            <td>{gameStats.bombsRevealed}/{game.bombs}</td>
+            <td>
+              {game.stats.bombsRevealed}/{game.bombs}
+            </td>
           </tr>
         </tbody>
       </table>
       <table>
         <tbody>{gameTableRows()}</tbody>
       </table>
-      {gameStats.result === "lost" ? (
+      {game.stats.result === "lost" ? (
         <p className="lost-message">YOU LOST</p>
       ) : null}
     </div>
-  );
-};
-
-const MineRow = ({ row, rowIndex, clickHandler }) => {
-  return (
-    <tr>
-      {row.map((cell, columnIndex) => (
-        <MineCell
-          key={rowIndex + "." + columnIndex}
-          cell={cell}
-          clickHandler={clickHandler}
-          x={rowIndex}
-          y={columnIndex}
-        />
-      ))}
-    </tr>
   );
 };
 
@@ -94,7 +64,7 @@ const MineCell = ({ cell, state, x, y, clickHandler }) => {
       {state === "h" ? (
         ""
       ) : cell === "b" ? (
-        <img className="cell-icon" src={Bomb} />
+        <img className="cell-icon" src={Bomb} alt="bomb"/>
       ) : (
         cell
       )}

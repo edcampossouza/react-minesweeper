@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import MineSweeper from "./game/MineSweeper";
 import generateGame from "./logic/game";
@@ -26,13 +25,9 @@ function App() {
     { size: 20, bombs: 100 },
   ];
 
-  const [styleApp, setStyleApp] = useState("");
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
   const [game, setGame] = useState(null);
   const [playing, setPlaying] = useState(false);
   function setGameOptions(size, bombs) {
-    setStyleApp("hidden");
     setGame(generateGame(size, size, bombs));
     setPlaying(true);
   }

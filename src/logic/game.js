@@ -4,12 +4,12 @@
  * @param {number} width - Number of columns
  * @param {number} bombs - Number of bombs (bombs < heigth * width)
  */
-function printTable(table) {
-  for (let i = 0; i < table.length; i++) {
-    const line = table[i].join(" ");
-    console.log(line);
-  }
-}
+// function printTable(table) {
+//   for (let i = 0; i < table.length; i++) {
+//     const line = table[i].join(" ");
+//     console.log(line);
+//   }
+// }
 function generateGame(height, width, bombs) {
   const inBounds = (x, y) => x >= 0 && y >= 0 && x < height && y < width;
   const oneIfBomb = (x, y) => (inBounds(x, y) && table[x][y] === "b" ? 1 : 0);
@@ -27,9 +27,6 @@ function generateGame(height, width, bombs) {
     result: null,
     plays: 0,
   };
-  let plays = 0;
-  let bombsRevealed = 0;
-  let result = "";
   const insertCellInArray = (cell, arr) => {
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].x === cell.x && arr[i].y === cell.y) {
@@ -130,7 +127,6 @@ function generateGame(height, width, bombs) {
   const flagCell = (x, y) => {
     if (inBounds(x, y)) {
       if (state[x][y] === "r") return;
-      plays++;
       state[x][y] = "f";
     }
   };
