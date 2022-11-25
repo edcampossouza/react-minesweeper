@@ -1,15 +1,30 @@
 import { useState } from "react";
 import Bomb from "../assets/bomb.png";
+import Flag from "../assets/flag.png";
 import "./Game.css";
 
 const MineSweeper = ({ game }) => {
+  const [mode, setMode] = useState("probing");
   const [gameState, setGameState] = useState(game.state);
   const cellClickHandler = (x, y) => {
     console.log(x, y);
-    game.tryCell(x, y);
+    if (mode === "probing") game.tryCell(x, y);
+    else game.flagCell(x, y);
     const state = game.state.map((row) => row.slice());
     console.log(game.stats);
     setGameState(state);
+  };
+  const refresh = () => {
+    const state = game.state.map((row) => row.slice());
+    console.log(game.stats);
+    setGameState(state);
+  };
+  const resetGame = () => {
+    game.resetGame();
+    refresh();
+  };
+  const changeMode = () => {
+    setMode(mode === "probing" ? "marking" : "probing");
   };
   const gameTableRows = () => {
     const rows = [];
@@ -31,7 +46,6 @@ const MineSweeper = ({ game }) => {
     }
     return rows;
   };
-
   return (
     <div>
       <table className="stats-table">
@@ -39,12 +53,19 @@ const MineSweeper = ({ game }) => {
           <tr>
             <td>Plays</td>
             <td>{game.stats.plays}</td>
+            <td>
+              <button onClick={resetGame}>Reset Game</button>
+            </td>
           </tr>
           <tr>
-            <td>Bombs Revealed</td>
+            <td>Bombs marked</td>
             <td>
-              {game.stats.bombsRevealed}/{game.bombs}
+              {game.stats.bombsFlagged}/{game.bombs}
             </td>
+          </tr>
+          <tr onClick={changeMode}>
+            <td>Mode</td>
+            <td>{mode}</td>
           </tr>
         </tbody>
       </table>
@@ -53,6 +74,8 @@ const MineSweeper = ({ game }) => {
       </table>
       {game.stats.result === "lost" ? (
         <p className="lost-message">YOU LOST</p>
+      ) : game.stats.result === "won" ? (
+        <p className="won-message">YOU WON</p>
       ) : null}
     </div>
   );
@@ -60,13 +83,18 @@ const MineSweeper = ({ game }) => {
 
 const MineCell = ({ cell, state, x, y, clickHandler }) => {
   return (
-    <td onClick={() => clickHandler(x, y)} className="game-cell">
+    <td
+      onClick={() => clickHandler(x, y)}
+      className={`game-cell ${cell === 0 && state === "r" ? "empty-cell" : ""}`}
+    >
       {state === "h" ? (
         ""
+      ) : state === "f" ? (
+        <img className="cell-icon" src={Flag} alt="flag" />
       ) : cell === "b" ? (
-        <img className="cell-icon" src={Bomb} alt="bomb"/>
+        <img className="cell-icon" src={Bomb} alt="bomb" />
       ) : (
-        cell
+        cell || ""
       )}
     </td>
   );

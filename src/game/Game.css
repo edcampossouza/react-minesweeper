@@ -6,8 +6,19 @@
   text-align: center;
 }
 
-.cell-icon {
-  width: 100%;
-  height: 100%;
+.empty-cell {
+  background-color: #bebebe;
 }
 
+.cell-icon {
+  width: 80%;
+  height: 80%;
+}
+
+.lost-message {
+  color: red;
+}
+
+.won-message {
+  color: blue;
+}

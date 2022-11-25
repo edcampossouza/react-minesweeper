@@ -23,9 +23,10 @@ function generateGame(height, width, bombs) {
     stats.result = "lost";
   };
   const stats = {
-    bombsRevealed: 0,
+    bombsFlagged: 0,
     result: null,
     plays: 0,
+    correctFlags: 0,
   };
   const insertCellInArray = (cell, arr) => {
     for (let i = 0; i < arr.length; i++) {
@@ -37,7 +38,7 @@ function generateGame(height, width, bombs) {
   };
   const tryCell = (x, y) => {
     if (inBounds(x, y)) {
-      if (state[x][y] === "r") return;
+      if (state[x][y] === "r" || state[x][y] === "f") return;
       stats.plays++;
       if (table[x][y] === "b") {
         lost();
@@ -45,6 +46,10 @@ function generateGame(height, width, bombs) {
         const arrToReveal = [{ x, y }];
         while (arrToReveal.length > 0) {
           const toReveal = arrToReveal[0];
+          console.log(">>", x, y);
+          if (state[toReveal.x][toReveal.y] === "f") {
+            stats.bombsFlagged--;
+          }
           state[toReveal.x][toReveal.y] = "r";
           arrToReveal.splice(0, 1);
           if (table[toReveal.x][toReveal.y] !== 0) continue;
@@ -124,10 +129,32 @@ function generateGame(height, width, bombs) {
       }
     }
   };
+  const resetGame = () => {
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) state[i][j] = "h";
+    }
+    stats.bombsFlagged = 0;
+    stats.result = null;
+    stats.plays = 0;
+    stats.correctFlags = 0;
+  };
   const flagCell = (x, y) => {
+    if (stats.result) return;
     if (inBounds(x, y)) {
-      if (state[x][y] === "r") return;
+      if (state[x][y] === "f") {
+        stats.bombsFlagged--;
+        if (table[x][y] === "b") stats.correctFlags--;
+        state[x][y] = "h";
+        return;
+      }
+      if (state[x][y] === "r" || stats.bombsFlagged === bombs) return;
+
       state[x][y] = "f";
+      stats.bombsFlagged++;
+      if (table[x][y] === "b") {
+        stats.correctFlags++;
+        if (stats.correctFlags === bombs) stats.result = "won";
+      }
     }
   };
   const state = Array(height)
@@ -159,7 +186,17 @@ function generateGame(height, width, bombs) {
       table[i][j] = cntBombs;
     }
   }
-  return { table, state, height, width, bombs, stats, tryCell, flagCell };
+  return {
+    table,
+    state,
+    height,
+    width,
+    bombs,
+    stats,
+    tryCell,
+    flagCell,
+    resetGame,
+  };
 }
 
 // const game = generateGame(10, 10, 50);
