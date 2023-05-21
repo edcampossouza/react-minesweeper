@@ -22,3 +22,25 @@
 .won-message {
   color: blue;
 }
+
+.menu-bar {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-bar .image {
+  width: 50px;
+  height: 50px;
+}
+
+.stats-table td {
+  text-align: center;
+}
+
+.stats-table td {
+  width: 33%;
+}
+.stats-num {
+  font-size: 35px;
+}

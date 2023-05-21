@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Bomb from "../assets/bomb.png";
 import Flag from "../assets/flag.png";
+import Crosshair from "../assets/crosshair.png";
 import "./Game.css";
 
 const MineSweeper = ({ game }) => {
@@ -48,27 +49,34 @@ const MineSweeper = ({ game }) => {
   };
   return (
     <div>
-      <table className="stats-table">
-        <tbody>
-          <tr>
-            <td>Plays</td>
-            <td>{game.stats.plays}</td>
-            <td>
-              <button onClick={resetGame}>Reset Game</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Bombs marked</td>
-            <td>
-              {game.stats.bombsFlagged}/{game.bombs}
-            </td>
-          </tr>
-          <tr onClick={changeMode}>
-            <td>Mode</td>
-            <td>{mode}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="menu-bar">
+        <table className="stats-table">
+          <tbody>
+            <tr>
+              <td>Mode</td>
+              <td>Plays</td>
+              <td>Bombs Marked</td>
+            </tr>
+            <tr>
+              <td>
+                {mode === "marking" && (
+                  <img className="image" src={Flag} onClick={changeMode} />
+                )}
+                {mode === "probing" && (
+                  <img className="image" src={Crosshair} onClick={changeMode} />
+                )}
+              </td>
+              <td className="stats-num">{game.stats.plays}</td>
+              <td className="stats-num">{game.stats.bombsFlagged}/{game.bombs}</td>
+            </tr>
+            <tr>
+              <td>
+                <span>{mode}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <table>
         <tbody>{gameTableRows()}</tbody>
       </table>
