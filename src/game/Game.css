@@ -44,3 +44,15 @@
 .stats-num {
   font-size: 35px;
 }
+
+.button {
+  margin-top: 20px;
+  width: 200px;
+  display: block;
+  border: none;
+  cursor: pointer;
+  font-size: larger;
+}
+.button:hover {
+  background-color: azure;
+}

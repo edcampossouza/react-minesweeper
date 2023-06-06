@@ -47,6 +47,16 @@ const MineSweeper = ({ game }) => {
     }
     return rows;
   };
+  const options = (
+    <>
+      <button className="button" onClick={resetGame}>
+        Reset board
+      </button>
+      <button className="button" onClick={() => window.location.reload(false)}>
+        Select game...
+      </button>
+    </>
+  );
   return (
     <div>
       <div className="menu-bar">
@@ -67,7 +77,9 @@ const MineSweeper = ({ game }) => {
                 )}
               </td>
               <td className="stats-num">{game.stats.plays}</td>
-              <td className="stats-num">{game.stats.bombsFlagged}/{game.bombs}</td>
+              <td className="stats-num">
+                {game.stats.bombsFlagged}/{game.bombs}
+              </td>
             </tr>
             <tr>
               <td>
@@ -81,10 +93,15 @@ const MineSweeper = ({ game }) => {
         <tbody>{gameTableRows()}</tbody>
       </table>
       {game.stats.result === "lost" ? (
-        <p className="lost-message">YOU LOST</p>
+        <>
+          <p className="lost-message">YOU LOST</p>
+        </>
       ) : game.stats.result === "won" ? (
-        <p className="won-message">YOU WON</p>
+        <>
+          <p className="won-message">YOU WON</p>
+        </>
       ) : null}
+      {options}
     </div>
   );
 };

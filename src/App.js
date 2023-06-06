@@ -9,7 +9,11 @@ function Welcome({ setGame, options }) {
       <h1>Select the board size:</h1>
       <ul>
         {options.map((op) => (
-          <li className="list-option" key={op.size} onClick={() => setGame(op.size, op.bombs)}>
+          <li
+            className="list-option"
+            key={op.size}
+            onClick={() => setGame(op.size, op.bombs)}
+          >
             {op.size} x {op.size} ({op.bombs} bombs)
           </li>
         ))}
